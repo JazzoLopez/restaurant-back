@@ -44,4 +44,14 @@ class ReservacionModelos{
             //$this -> response -> result = $result;
             return $this -> response ->SetResponse(true,'Reservación guardada correctamente');
         }
+
+        public function eliminarReservacion($id){
+            $validate = $this -> db -> deleteFrom('reservations')->where('id',$id)->execute();
+            if($validate> 0){
+                return $this -> response -> SetResponse(true,'Reservacion eliminada correctamente');
+            }
+            else {
+                return $this -> response -> SetResponse(false,'Error al eliminar');
+            }
+        }
 }
