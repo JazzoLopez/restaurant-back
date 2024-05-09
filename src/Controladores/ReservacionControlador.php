@@ -13,9 +13,9 @@ class ReservacionControlador{
     }
 
     public function verReservaciones ( Request $req, Response $res, $args ) {
-        $parametro = $args['userID'];
+        $body = json_decode($req->getBody());
         $res    ->withHeader('Content-type','application/json')
-                ->getBody()->write(json_encode( $this->reservacion->verReservaciones($parametro)));
+                ->getBody()->write(json_encode( $this->reservacion->verReservaciones($body)));
         return $res;
     } 
 

@@ -19,8 +19,9 @@ class ReservacionModelos{
         $this -> response = new Response();
         }
 
-        public function verReservaciones($parametro){ 
-            $resutl = $this->db->from('reservations')->where('user_id',$parametro )->fetchAll();
+        public function verReservaciones($body){ 
+            $id = $body -> id;
+            $resutl = $this->db->from( $this-> tbReservaciones)->where($this -> userID, $id )->fetchAll();
             if(count($resutl) > 0){
                 $this -> response -> result = $resutl;
             return $this->response->SetResponse(true,"Datos pintados correctamente");
@@ -30,8 +31,8 @@ class ReservacionModelos{
         }
 
         public function nuevaReservacion($body){
-            $validate = $this -> db -> from ('reservations')
-             -> where('hour', $body -> hour)->count();
+            $validate = $this -> db -> from ($this -> tbReservaciones)
+                -> where($this -> hour, $body -> hour) -> where($this ->date, $body -> date) ->count();
              if($validate>0){
                 return $this -> response -> SetResponse(false,"La hora de reservación ya esta ocupada");
              }
@@ -50,7 +51,7 @@ class ReservacionModelos{
         }
 
         public function eliminarReservacion($id){
-            $validate = $this -> db -> deleteFrom('reservations')->where('id',$id)->execute();
+            $validate = $this -> db -> deleteFrom($this -> tbReservaciones)->where('id',$id)->execute();
             if($validate> 0){
                 return $this -> response -> SetResponse(true,'Reservacion eliminada correctamente');
             }
