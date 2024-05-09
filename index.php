@@ -19,7 +19,9 @@ $app = AppFactory::create();
 require __DIR__ . '/src/loadApp.php';
 
 $app->get('/', function (Request $request, Response $response, $args) {
-    $response->getBody()->write("App funcionando!");
+    $response->getBody()->write(json_encode([
+        "status"=>"server is on"
+    ]));
     return $response;
 });
 
