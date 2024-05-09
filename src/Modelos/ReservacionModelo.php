@@ -21,8 +21,12 @@ class ReservacionModelos{
 
         public function verReservaciones($parametro){ 
             $resutl = $this->db->from('reservations')->where('user_id',$parametro )->fetchAll();
-            $this -> response -> result = $resutl;
+            if(count($resutl) > 0){
+                $this -> response -> result = $resutl;
             return $this->response->SetResponse(true,"Datos pintados correctamente");
+            } else {
+                return $this->response->SetResponse(false,"El Id de la reservación no existe");
+            }
         }
 
         public function nuevaReservacion($body){
@@ -43,5 +47,15 @@ class ReservacionModelos{
             }
             //$this -> response -> result = $result;
             return $this -> response ->SetResponse(true,'Reservación guardada correctamente');
+        }
+
+        public function eliminarReservacion($id){
+            $validate = $this -> db -> deleteFrom('reservations')->where('id',$id)->execute();
+            if($validate> 0){
+                return $this -> response -> SetResponse(true,'Reservacion eliminada correctamente');
+            }
+            else {
+                return $this -> response -> SetResponse(false,'Error al eliminar');
+            }
         }
 }

@@ -25,4 +25,11 @@ class ReservacionControlador{
             ->getBody()->write(json_encode( $this->reservacion->nuevaReservacion($body)));
         return $res;    
     }
+
+    public function eliminarReservacion(Request $req, Response $res, $args ) {
+        $parametro = $args['id'];
+        $res    ->withHeader('Content-type','application/json')
+                ->getBody()->write(json_encode( $this->reservacion->eliminarReservacion($parametro)));
+        return $res;
+    }
 }
