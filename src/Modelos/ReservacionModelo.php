@@ -21,8 +21,12 @@ class ReservacionModelos{
 
         public function verReservaciones($parametro){ 
             $resutl = $this->db->from('reservations')->where('user_id',$parametro )->fetchAll();
-            $this -> response -> result = $resutl;
+            if(count($resutl) > 0){
+                $this -> response -> result = $resutl;
             return $this->response->SetResponse(true,"Datos pintados correctamente");
+            } else {
+                return $this->response->SetResponse(false,"El Id de la reservación no existe");
+            }
         }
 
         public function nuevaReservacion($body){
