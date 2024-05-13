@@ -27,7 +27,7 @@ class ReservacionModelos
     public function verReservaciones($body)
     {
         $jwt = $body -> jwt;
-        $decodedToken = JWT::decode($jwt, $_ENV['JWT_SECRET'], []);
+        $decodedToken = JWT::decode($jwt, $_ENV['JWT_SECRET']);
 
     // Acceder a los datos decodificados
         $userId = $decodedToken->user_id;
