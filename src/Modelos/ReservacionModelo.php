@@ -9,6 +9,7 @@ class ReservacionModelos
 {
     private $response;
     private $tbReservaciones = 'reservations';
+    private $id = 'id';
     private $db = null;
     private $date = 'date';
     private $hour = 'hour';
@@ -24,13 +25,24 @@ class ReservacionModelos
 
     public function verReservaciones($body)
     {
-        $id = $body->id;
-        $resutl = $this->db->from($this->tbReservaciones)->where($this->userID, $id)->fetchAll();
+        $id = $body -> user_id;
+        $resutl = $this->db->from($this->tbReservaciones)->where($this -> userID, $id)->fetchAll();
         if (count($resutl) > 0) {
             $this->response->result = $resutl;
             return $this->response->SetResponse(true, "Datos pintados correctamente");
         } else {
             return $this->response->SetResponse(false, "El Id de la reservación no existe");
+        }
+    }
+
+    public function eliminarReservacion($body)
+    {
+        $id = $body -> id;
+        $validate = $this->db->delete($this->tbReservaciones)->where($this -> id, $id)->execute();
+        if ($validate > 0) {
+            return $this->response->SetResponse(true, 'Reservacion eliminada correctamente');
+        } else {
+            return $this->response->SetResponse(false, 'Error al eliminar');
         }
     }
 
@@ -55,13 +67,4 @@ class ReservacionModelos
         return $this->response->SetResponse(true, 'Reservación guardada correctamente');
     }
 
-    public function eliminarReservacion($id)
-    {
-        $validate = $this->db->deleteFrom($this->tbReservaciones)->where('id', $id)->execute();
-        if ($validate > 0) {
-            return $this->response->SetResponse(true, 'Reservacion eliminada correctamente');
-        } else {
-            return $this->response->SetResponse(false, 'Error al eliminar');
-        }
-    }
 }
