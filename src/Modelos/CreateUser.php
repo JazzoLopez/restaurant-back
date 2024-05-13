@@ -16,6 +16,7 @@ class UserModel
     private $email = 'email';
     private $password = 'password';
 
+    private static $minutes = 172800;
     public function __construct()
     {
         $db = new DbModel();
@@ -66,16 +67,19 @@ class UserModel
 
         // Verificar la contraseña
         if (password_verify($password, $user['password'])) {
+            $time = time();
             $payload = [
                 "user_id" => $user['id'],
                 "email" => $user['email'],
+                "iat"=>$time,
+                'exp' => $time+3600,
             ];
 
             // Generar el token JWT
             $token = JWT::encode($payload, $_ENV['JWT_SECRET'], "HS256", null, [
-                'kid' =>  $user['id'],
+                'kid' => $user['id'],
             ]);
-            
+
             $this->response->result = $token;
             return $this->response->SetResponse(true, "Inicio de sesión correcto.");
         } else {
