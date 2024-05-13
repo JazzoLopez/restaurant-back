@@ -3,9 +3,10 @@ $base = __DIR__ . '/';
 
 $folders = [
     'Controladores',
+    'Lib',
     'Modelos',
     'Rutas',
-    'Lib'
+
 ];
 
 foreach($folders as $f)

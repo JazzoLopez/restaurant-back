@@ -32,9 +32,9 @@ class PlatilloModelo
         $result = $this -> db ->insertInto($this -> tbSaucers) -> values($data);
         if($result){
         $this -> response -> result = $result;
-        return $this->response->SetResponse(true, 'Platillo registrado');
+        return $this->response->SetResponse(true, 'Platillo registrado.');
         } else {
-            return $this->response->SetResponse(false,'Error al registrar ');
+            return $this->response->SetResponse(false,'Error al registrar.');
         }
     }
 }

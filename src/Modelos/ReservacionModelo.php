@@ -3,6 +3,7 @@ namespace App\Modelos;
 
 use App\Modelos\DbModel,
 App\Lib\Response;
+use Firebase\JWT\JWT;
 
 
 class ReservacionModelos
@@ -25,8 +26,14 @@ class ReservacionModelos
 
     public function verReservaciones($body)
     {
-        $id = $body -> user_id;
-        $resutl = $this->db->from($this->tbReservaciones)->where($this -> userID, $id)->fetchAll();
+        $jwt = $body -> jwt;
+        $decodedToken = JWT::decode($jwt, $_ENV['JWT_SECRET'], []);
+
+    // Acceder a los datos decodificados
+        $userId = $decodedToken->user_id;
+        $email = $decodedToken->email;
+
+        $resutl = $this->db->from($this->tbReservaciones)->where($this -> userID, $userId)->fetchAll();
         if (count($resutl) > 0) {
             $this->response->result = $resutl;
             return $this->response->SetResponse(true, "Datos pintados correctamente");
