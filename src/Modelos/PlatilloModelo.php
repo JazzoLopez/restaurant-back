@@ -8,11 +8,11 @@ class PlatilloModelo
 {
     private $db = null;
     private $response;
+    private $tbSaucers = 'saucers';
     private $nombre = 'name';
     private $descripcion = 'description';
     private $precio = 'price';
     private $image = 'image';
-    private $tbSaucers = 'saucers';
 
     public function __construct()
     {
