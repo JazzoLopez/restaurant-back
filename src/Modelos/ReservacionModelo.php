@@ -6,6 +6,8 @@ App\Lib\Response;
 use Firebase\JWT\JWT;
 
 
+
+
 class ReservacionModelos
 {
     private $response;
@@ -24,21 +26,14 @@ class ReservacionModelos
         $this->response = new Response();
     }
 
-    public function verReservaciones($body)
+    public function verReservaciones($userId)
     {
-        $jwt = $body -> jwt;
-        $decodedToken = JWT::decode($jwt, $_ENV['JWT_SECRET']);
-
-    // Acceder a los datos decodificados
-        $userId = $decodedToken->user_id;
-        $email = $decodedToken->email;
-
         $resutl = $this->db->from($this->tbReservaciones)->where($this -> userID, $userId)->fetchAll();
         if (count($resutl) > 0) {
             $this->response->result = $resutl;
             return $this->response->SetResponse(true, "Datos pintados correctamente");
         } else {
-            return $this->response->SetResponse(false, "El Id de la reservación no existe");
+            return $this->response->SetResponse(false, "El Id del usuario no existe");
         }
     }
 
