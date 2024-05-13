@@ -2,10 +2,10 @@
 $base = __DIR__ . '/';
 
 $folders = [
-    'Controladores',
+    'Controllers',
     'Lib',
-    'Modelos',
-    'Rutas',
+    'Models',
+    'Routes',
 
 ];
 

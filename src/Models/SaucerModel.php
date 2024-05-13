@@ -1,10 +1,10 @@
 <?php
-namespace App\Modelos;
+namespace App\Models;
 
-use App\Modelos\DbModel,
+use App\Models\DbModel,
 App\Lib\Response;
 
-class PlatilloModelo
+class SaucerModel
 {
     private $db = null;
     private $response;
@@ -22,7 +22,7 @@ class PlatilloModelo
         $this->response = new Response();
     }
 
-    public function nuevoPlatillo($body)
+    public function newSaucer($body)
     {
         $data = [
             'name' => $body->name,
@@ -39,7 +39,7 @@ class PlatilloModelo
         }
     }
 
-    public function verPlatillos () {
+    public function getSaucers () {
         $data = $this -> db -> from($this -> tbSaucers)->fetchAll();
         if(count($data) > 0){
             $this -> response -> result = $data;
@@ -49,7 +49,7 @@ class PlatilloModelo
         return $this->response->SetResponse(false,'Error al traer los platillos');
     }
 
-    public function eliminarPlatillo($id) {
+    public function deleteSaucers($id) {
         $data = $this ->db -> delete($this -> tbSaucers)->where($this -> saucersId, $id)->excecute();
         if ($data > 0) {
             return $this->response->SetResponse(true, 'Platillo eliminado correctamente.');
@@ -58,7 +58,7 @@ class PlatilloModelo
         }
     }
 
-    public function modificarPlatillo($body){
+    public function updateSaucer($body){
         //TODO: logica para actualizar el platillo asi bn loco
     }
 }

@@ -1,23 +1,23 @@
 <?php
-namespace App\Controladores;
+namespace App\Controllers;
 
-use App\Modelos\ReservacionModelos;
+use App\Models\ReservationModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Firebase\JWT\Key;
 use Firebase\JWT\JWT;
 
 
-class ReservacionControlador
+class ReservationController
 {
     private $reservacion = null;
 
     public function __construct()
     {
-        $this->reservacion = new ReservacionModelos;
+        $this->reservacion = new ReservationModel();
     }
 
-    public function verReservaciones(Request $req, Response $res, $args)
+    public function getReservations(Request $req, Response $res, $args)
     {
 
         $body = json_decode($req->getBody());
@@ -25,23 +25,23 @@ class ReservacionControlador
         $decodedToken = JWT::decode($jwt, new key($_ENV['JWT_SECRET'], 'HS256'));
         $userId = $decodedToken->user_id;
         $res->withHeader('Content-type', 'application/json')
-            ->getBody()->write(json_encode($this->reservacion->verReservaciones($userId)));
+            ->getBody()->write(json_encode($this->reservacion->getReservations($userId)));
         return $res;
     }
 
-    public function nuevaReservacion(Request $req, Response $res, $args)
+    public function newReservations(Request $req, Response $res, $args)
     {
         $body = json_decode($req->getBody());
         $res->withHeader('Content-type', 'application/json')
-            ->getBody()->write(json_encode($this->reservacion->nuevaReservacion($body)));
+            ->getBody()->write(json_encode($this->reservacion->newReservations($body)));
         return $res;
     }
 
-    public function eliminarReservacion(Request $req, Response $res, $args)
+    public function deleteReservations(Request $req, Response $res, $args)
     {
         $body = json_decode($req->getBody());
         $res->withHeader('Content-type', 'application/json')
-            ->getBody()->write(json_encode($this->reservacion->eliminarReservacion($body)));
+            ->getBody()->write(json_encode($this->reservacion->deleteReservations($body)));
         return $res;
     }
 }
