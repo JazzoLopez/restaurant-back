@@ -1,7 +1,7 @@
 <?php
-namespace App\Modelos;
+namespace App\Models;
 
-use App\Modelos\DbModel;
+use App\Models\DbModel;
 use App\Lib\Response;
 use Firebase\JWT\JWT;
 

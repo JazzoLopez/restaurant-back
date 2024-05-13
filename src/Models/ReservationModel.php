@@ -1,14 +1,14 @@
 <?php
-namespace App\Modelos;
+namespace App\Models;
 
-use App\Modelos\DbModel,
+use App\Models\DbModel,
 App\Lib\Response;
 use Firebase\JWT\JWT;
 
 
 
 
-class ReservacionModelos
+class ReservationModel
 {
     private $response;
     private $tbReservaciones = 'reservations';
@@ -26,7 +26,7 @@ class ReservacionModelos
         $this->response = new Response();
     }
 
-    public function verReservaciones($userId)
+    public function getReservations($userId)
     {
         $resutl = $this->db->from($this->tbReservaciones)->where($this->userID, $userId)->fetchAll();
         if (count($resutl) > 0) {
@@ -37,7 +37,7 @@ class ReservacionModelos
         }
     }
 
-    public function eliminarReservacion($body)
+    public function deleteReservations($body)
     {
         $id = $body->id;
         $validate = $this->db->delete($this->tbReservaciones)->where($this->id, $id)->execute();
@@ -48,7 +48,7 @@ class ReservacionModelos
         }
     }
 
-    public function nuevaReservacion($body)
+    public function newReservations($body)
     {
         $validate = $this->db->from($this->tbReservaciones)
             ->where($this->hour, $body->hour)->where($this->date, $body->date)->count();

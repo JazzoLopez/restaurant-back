@@ -1,12 +1,12 @@
 <?php
-namespace App\Controladores;
+namespace App\Controllers;
 
 //EL nombre siempre es el mismo de la clase con la que trabajas ten cuidado
-use App\Modelos\UserModel;
+use App\Models\UserModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class CreateUserController {
+class UserController {
     private $UserModel;
 
     public function __construct(){
