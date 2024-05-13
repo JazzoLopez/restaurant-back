@@ -20,8 +20,8 @@ class ReservationController
     public function getReservations(Request $req, Response $res, $args)
     {
 
-        $body = json_decode($req->getBody());
-        $jwt = $body->jwt;
+        $body = $req->getHeader('jwt');   
+        $jwt = $body[0];
         $decodedToken = JWT::decode($jwt, new key($_ENV['JWT_SECRET'], 'HS256'));
         $userId = $decodedToken->user_id;
         $res->withHeader('Content-type', 'application/json')

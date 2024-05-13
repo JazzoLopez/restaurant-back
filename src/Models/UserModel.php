@@ -24,13 +24,6 @@ class UserModel
         $this->response = new Response();
     }
 
-    public function getUserById($userId)
-    {
-        $result = $this->db->from($this->tbUsers)->where($this->id, $userId)->fetch();
-        $this->response->result = $result;
-        return $this->response->SetResponse(true, "Usuario obtenido correctamente");
-    }
-
     public function createUser($userData)
     {
         // Verificar si el correo electrónico ya está registrado
@@ -53,8 +46,6 @@ class UserModel
 
         return $this->response->SetResponse(true, "Usuario creado correctamente");
     }
-
-
 
     public function authenticateUser($body)
     {
@@ -87,4 +78,7 @@ class UserModel
         }
     }
 
+    public function updateUser ($body){
+        
+    }
 }
