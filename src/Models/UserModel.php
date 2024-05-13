@@ -70,7 +70,7 @@ class UserModel
             $token = JWT::encode($payload, $_ENV['JWT_SECRET'], "HS256", null, [
                 'kid' => $user['id'],
             ]);
-
+            
             $this->response->result = $token;
             return $this->response->SetResponse(true, "Inicio de sesión correcto.");
         } else {
@@ -79,6 +79,6 @@ class UserModel
     }
 
     public function updateUser ($body){
-        
+
     }
 }
