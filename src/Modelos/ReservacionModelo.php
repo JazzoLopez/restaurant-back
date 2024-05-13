@@ -28,7 +28,7 @@ class ReservacionModelos
 
     public function verReservaciones($userId)
     {
-        $resutl = $this->db->from($this->tbReservaciones)->where($this -> userID, $userId)->fetchAll();
+        $resutl = $this->db->from($this->tbReservaciones)->where($this->userID, $userId)->fetchAll();
         if (count($resutl) > 0) {
             $this->response->result = $resutl;
             return $this->response->SetResponse(true, "Datos pintados correctamente");
@@ -39,8 +39,8 @@ class ReservacionModelos
 
     public function eliminarReservacion($body)
     {
-        $id = $body -> id;
-        $validate = $this->db->delete($this->tbReservaciones)->where($this -> id, $id)->execute();
+        $id = $body->id;
+        $validate = $this->db->delete($this->tbReservaciones)->where($this->id, $id)->execute();
         if ($validate > 0) {
             return $this->response->SetResponse(true, 'Reservacion eliminada correctamente');
         } else {

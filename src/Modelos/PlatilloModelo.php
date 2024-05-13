@@ -8,6 +8,7 @@ class PlatilloModelo
 {
     private $db = null;
     private $response;
+    private $saucersId= 'id';
     private $tbSaucers = 'saucers';
     private $nombre = 'name';
     private $descripcion = 'description';
@@ -36,5 +37,28 @@ class PlatilloModelo
         } else {
             return $this->response->SetResponse(false,'Error al registrar.');
         }
+    }
+
+    public function verPlatillos () {
+        $data = $this -> db -> from($this -> tbSaucers)->fetchAll();
+        if(count($data) > 0){
+            $this -> response -> result = $data;
+            return $this->response->SetResponse(true, 'Listado de platillos.');
+        }   
+
+        return $this->response->SetResponse(false,'Error al traer los platillos');
+    }
+
+    public function eliminarPlatillo($id) {
+        $data = $this ->db -> delete($this -> tbSaucers)->where($this -> saucersId, $id)->excecute();
+        if ($data > 0) {
+            return $this->response->SetResponse(true, 'Platillo eliminado correctamente.');
+        } else {
+            return $this->response->SetResponse(false, 'Error al eliminar');
+        }
+    }
+
+    public function modificarPlatillo($body){
+        //TODO: logica para actualizar el platillo asi bn loco
     }
 }
