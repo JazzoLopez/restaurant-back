@@ -66,7 +66,6 @@ class ReservationModel
         if (!$result) {
             return $this->response->SetResponse(false, '');
         }
-        //$this -> response -> result = $result;
         return $this->response->SetResponse(true, 'Reservación guardada correctamente');
     }
 

@@ -16,7 +16,6 @@ class UserController {
     public function createUser(Request $req, Response $res, $args) {
         $userData = json_decode($req->getBody());
 
-        // Llamar al método createUser del modelo CreateUser
         $result = $this->UserModel->createUser($userData);
 
         // Preparar y enviar respuesta HTTP
