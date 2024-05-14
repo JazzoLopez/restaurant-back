@@ -15,6 +15,7 @@ class UserModel
     private $lastName = 'lastname';
     private $email = 'email';
     private $password = 'password';
+    private $tel = 'tel';   
 
     private static $minutes = 172800;
     public function __construct()
@@ -31,10 +32,10 @@ class UserModel
         if ($existingUser > 0) {
             return $this->response->SetResponse(false, "El correo electrónico ya está registrado");
         }
-
         $data = [
             $this->name => $userData->name,
             $this->lastName => $userData->lastname,
+            $this->tel => $userData->tel,
             $this->email => $userData->email,
             $this->password => password_hash($userData->password, PASSWORD_DEFAULT) // Se hashea la contraseña antes de guardarla en la base de datos
         ];
