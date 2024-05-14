@@ -31,7 +31,7 @@ class UserModel
         $existingUser = $this->db->from($this->tbUsers)->where($this->email, $userData->email)->count();
         if ($existingUser > 0) {
             return $this->response->SetResponse(false, "El correo electrónico ya está registrado");
-        }
+        }   
         $data = [
             $this->name => $userData->name,
             $this->lastName => $userData->lastname,

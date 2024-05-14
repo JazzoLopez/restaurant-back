@@ -17,7 +17,7 @@ class UserController {
         $userData = json_decode($req->getBody());
 
         $result = $this->UserModel->createUser($userData);
-
+        
         // Preparar y enviar respuesta HTTP
         $res = $res->withHeader('Content-type', 'application/json');
         $res->getBody()->write(json_encode($result));
