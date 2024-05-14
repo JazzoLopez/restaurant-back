@@ -20,9 +20,8 @@ class ReservationController
     public function getReservations(Request $req, Response $res, $args)
     {
 
-        $body = $req->getHeader('jwt');   
-        $jwt = $body[0];
-        $decodedToken = JWT::decode($jwt, new key($_ENV['JWT_SECRET'], 'HS256'));
+        $jwt = json_decode($req->getBody());  
+        $decodedToken = JWT::decode($jwt->jwt, new key($_ENV['JWT_SECRET'], 'HS256'));
         $userId = $decodedToken->user_id;
         $res->withHeader('Content-type', 'application/json')
             ->getBody()->write(json_encode($this->reservacion->getReservations($userId)));
@@ -32,8 +31,10 @@ class ReservationController
     public function newReservations(Request $req, Response $res, $args)
     {
         $body = json_decode($req->getBody());
-        $res->withHeader('Content-type', 'application/json')
-            ->getBody()->write(json_encode($this->reservacion->newReservations($body)));
+        $decodedToken = JWT::decode($body->jwt, new key($_ENV['JWT_SECRET'], 'HS256'));
+        $userId = $decodedToken->user_id;
+        $res->withHeader('Content-type', 'application/json')        
+            ->getBody()->write(json_encode($this->reservacion->newReservations($body, $userId)));
         return $res;
     }
 

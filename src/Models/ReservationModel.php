@@ -28,6 +28,7 @@ class ReservationModel
 
     public function getReservations($userId)
     {
+
         $resutl = $this->db->from($this->tbReservaciones)->where($this->userID, $userId)->fetchAll();
         if (count($resutl) > 0) {
             $this->response->result = $resutl;
@@ -48,7 +49,7 @@ class ReservationModel
         }
     }
 
-    public function newReservations($body)
+    public function newReservations($body, $userId)
     {
         $validate = $this->db->from($this->tbReservaciones)
             ->where($this->hour, $body->hour)->where($this->date, $body->date)->count();
@@ -59,7 +60,7 @@ class ReservationModel
             'date' => $body->date,
             'hour' => $body->hour,
             'comments' => $body->comments,
-            'user_id' => $body->user_id
+            'user_id' => $userId
         ];
         $result = $this->db->insertInto($this->tbReservaciones)->values($data)->execute();
         if (!$result) {

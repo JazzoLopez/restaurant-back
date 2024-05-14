@@ -30,7 +30,7 @@ class SaucerModel
             'price' => $body->price,
             'image' => $body->image
         ];
-        $result = $this -> db ->insertInto($this -> tbSaucers) -> values($data);
+        $result = $this -> db ->insertInto($this -> tbSaucers) -> values($data)->execute();
         if($result){
         $this -> response -> result = $result;
         return $this->response->SetResponse(true, 'Platillo registrado.');
