@@ -69,10 +69,10 @@ class SaucerModel
             'price' => $body->price,
             'image' => $body->image
         ];
-        $isExist = $this ->db -> from($this ->tbSaucers)->where($this ->saucersId -> $body -> id)->first();
-        if($isExist)
+        $isExist = $this ->db -> from($this ->tbSaucers)->where($this ->saucersId ,$body -> id)->fetch();
+        if(!$isExist){
             return $this -> response ->SetResponse(false,"EL platillo no existe");
-
+}
         $result = $this -> db -> update($this -> tbSaucers)->set($data)->where($this -> saucersId, $body->id)->execute();
         if($result){
             $this -> response -> result = $result;
