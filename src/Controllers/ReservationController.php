@@ -41,8 +41,10 @@ class ReservationController
     public function deleteReservations(Request $req, Response $res, $args)
     {
         $body = json_decode($req->getBody());
-        $res->withHeader('Content-type', 'application/json')
-            ->getBody()->write(json_encode($this->reservacion->deleteReservations($body)));
+        $decodedToken = JWT::decode($body->jwt, new key($_ENV['JWT_SECRET'], 'HS256'));
+        $userId = $decodedToken->user_id;
+        $res->withHeader('Content-type', 'application/json')        
+            ->getBody()->write(json_encode($this->reservacion->deleteReservations($body, $userId)));
         return $res;
     }
 }

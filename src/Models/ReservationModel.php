@@ -5,9 +5,6 @@ use App\Models\DbModel,
 App\Lib\Response;
 use Firebase\JWT\JWT;
 
-
-
-
 class ReservationModel
 {
     private $response;
@@ -38,10 +35,14 @@ class ReservationModel
         }
     }
 
-    public function deleteReservations($body)
+    public function deleteReservations($body, $userId)
     {
         $id = $body->id;
-        $validate = $this->db->delete($this->tbReservaciones)->where($this->id, $id)->execute();
+        $isExist = $this->db->from($this->tbReservaciones)->where($this->id, $id);
+        if ($isExist->count() == 0) {
+            return $this->response->SetResponse(false, 'La reservación no existe');
+        }
+        $validate = $this->db->delete($this->tbReservaciones)->where($this->id, $id)->where($this->userID, $userId)->execute();
         if ($validate > 0) {
             return $this->response->SetResponse(true, 'Reservacion eliminada correctamente');
         } else {
