@@ -27,7 +27,7 @@ class UserController {
     public function authenticateUser(Request $req, Response $res, $args) {
         $userData = json_decode($req->getBody());
         $result = $this->UserModel->authenticateUser($userData);
-        $res = $res->withHeader('Content-type', 'application/json')->withHeader('jwt',$result->result);
+        $res = $res->withHeader('Content-type', 'application/json');
         $res->getBody()->write(json_encode($result));
         return $res;
     }

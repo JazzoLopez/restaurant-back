@@ -59,6 +59,19 @@ class SaucerModel
     }
 
     public function updateSaucer($body){
-        //TODO: logica para actualizar el platillo asi bn loco
+        $data = [
+            'name' => $body->name,
+            'description' => $body->description,
+            'price' => $body->price,
+            'image' => $body->image
+        ];
+
+        $result = $this -> db -> update($this -> tbSaucers)->set($data)->where($this -> saucersId, $body->id)->execute();
+        if($result){
+            $this -> response -> result = $result;
+            return $this->response->SetResponse(true, 'Platillo actualizado.');
+        } else {
+            return $this->response->SetResponse(false,'Error al actualizar.');
+        }
     }
 }

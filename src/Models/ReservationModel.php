@@ -23,10 +23,10 @@ class ReservationModel
         $this->response = new Response();
     }
 
-    public function getReservations($userId)
+    public function getReservations($body)
     {
 
-        $resutl = $this->db->from($this->tbReservaciones)->where($this->userID, $userId)->fetchAll();
+        $resutl = $this->db->from($this->tbReservaciones)->where($this->userID, $body ->userID)->fetchAll();
         if (count($resutl) > 0) {
             $this->response->result = $resutl;
             return $this->response->SetResponse(true, "Datos pintados correctamente");
@@ -35,14 +35,13 @@ class ReservationModel
         }
     }
 
-    public function deleteReservations($body, $userId)
+    public function deleteReservations($body)
     {
-        $id = $body->id;
-        $isExist = $this->db->from($this->tbReservaciones)->where($this->id, $id);
+        $isExist = $this->db->from($this->tbReservaciones)->where($this->id, $body ->id);
         if ($isExist->count() == 0) {
             return $this->response->SetResponse(false, 'La reservación no existe');
         }
-        $validate = $this->db->delete($this->tbReservaciones)->where($this->id, $id)->where($this->userID, $userId)->execute();
+        $validate = $this->db->delete($this->tbReservaciones)->where($this->id, $body ->id)->where($this->userID, $body ->userID)->execute();
         if ($validate > 0) {
             return $this->response->SetResponse(true, 'Reservacion eliminada correctamente');
         } else {
@@ -50,7 +49,7 @@ class ReservationModel
         }
     }
 
-    public function newReservations($body, $userId)
+    public function newReservations($body)
     {
         $validate = $this->db->from($this->tbReservaciones)
             ->where($this->hour, $body->hour)->where($this->date, $body->date)->count();
@@ -61,7 +60,7 @@ class ReservationModel
             'date' => $body->date,
             'hour' => $body->hour,
             'comments' => $body->comments,
-            'user_id' => $userId
+            'user_id' => $body ->userID
         ];
         $result = $this->db->insertInto($this->tbReservaciones)->values($data)->execute();
         if (!$result) {

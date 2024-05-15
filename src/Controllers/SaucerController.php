@@ -29,4 +29,11 @@ class SaucerController{
             ->getBody()->write(json_encode($this->platillo->deleteSaucers($body)));
         return $res;
     }
+
+    public function updateSaucer(Request $req, Response $res, $args){
+        $body = json_decode($req->getBody());
+        $res->withHeader('Content-type', 'application/json')
+            ->getBody()->write(json_encode($this->platillo->updateSaucer($body)));
+        return $res;
+    }
 }
