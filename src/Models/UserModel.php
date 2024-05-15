@@ -10,7 +10,7 @@ class UserModel
     private $response;
     private $tbUsers = 'users';
     private $db = null;
-    private $id = 'id';
+    private $userID = 'id';
     private $name = 'name';
     private $lastName = 'lastname';
     private $email = 'email';
@@ -66,6 +66,52 @@ class UserModel
     }
 
     public function updateUser ($body){
+        $data = [
+            "name" => $body->name,
+            "lastname" => $body -> lastname,
+            "tel" => $body -> tel,
+            "email" => $body -> email,
+            $this->password => password_hash($body->password, PASSWORD_DEFAULT)
+        ];
+        $isExist = $this -> db -> from($this -> tbUsers)->where($this -> email, $body -> email)->fetch();
 
+        if($isExist){
+            return $this->response->SetResponse(false, 'El correo electrónico ya está registrado.');
+        }
+
+        $result = $this -> db -> update($this -> tbUsers)->set($data)->where($this -> userID, $body->id)->execute();
+        if($result){
+            $this -> response -> result = $result;
+            return $this->response->SetResponse(true, 'Usuario actualizado.');
+        } else {
+            return $this->response->SetResponse(false,'Error al actualizar.');
+        }
+    }   
+
+    public function deleteUser($body) {
+        $isExist = $this ->db -> from($this ->tbUsers)->where($this ->userID, $body -> id)->fetch();
+        if(!$isExist){
+            return $this -> response ->SetResponse(false,"EL usuario no existe");
+        }
+        $data = $this ->db -> deleteFrom($this -> tbUsers)->where($this -> userID, $body -> id)->execute();
+        if ($data) {
+            return $this->response->SetResponse(true, 'Usuario eliminado correctamente.');
+        } else {
+            return $this->response->SetResponse(false, 'Error al eliminar');
+        }
+    }
+
+    public function getUsers (){
+        $data = $this -> db -> from($this -> tbUsers)->select($this->name)->fetchAll();
+        if($data){
+            $this -> response -> result = $data;
+            return $this->response->SetResponse(true, 'Usuarios encontrados.');
+        } else {
+            return $this->response->SetResponse(false, 'No se encontraron usuarios.');
+        }
+    }
+
+    public function getOne($body) {
+        
     }
 }

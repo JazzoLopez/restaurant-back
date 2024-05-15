@@ -23,10 +23,10 @@ class SaucerController{
         return $res;
     }
     
-    public function deleteSaucers(Request $req, Response $res, $args){
+    public function deleteSaucer(Request $req, Response $res, $args){
         $body = json_decode($req->getBody());
         $res->withHeader('Content-type', 'application/json')
-            ->getBody()->write(json_encode($this->platillo->deleteSaucers($body)));
+            ->getBody()->write(json_encode($this->platillo->deleteSaucer($body)));
         return $res;
     }
 

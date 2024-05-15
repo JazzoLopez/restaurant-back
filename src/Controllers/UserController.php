@@ -31,4 +31,27 @@ class UserController {
         $res->getBody()->write(json_encode($result));
         return $res;
     }
+
+    public function updateUser (Request $req, Response $res, $args) {
+        $body = json_decode($req->getBody());
+        $result = $this->UserModel->updateUser($body);
+        $res = $res->withHeader('Content-type', 'application/json');
+        $res->getBody()->write(json_encode($result));
+        return $res;
+    }
+
+    public function deleteUser(Request $req, Response $res, $args) {
+        $body = json_decode($req->getBody());
+        $result = $this->UserModel->deleteUser($body);
+        $res = $res->withHeader('Content-type', 'application/json');
+        $res->getBody()->write(json_encode($result));
+        return $res;
+    }
+
+    public function getUsers(Request $req, Response $res, $args) {
+        $result = $this->UserModel->getUsers();
+        $res = $res->withHeader('Content-type', 'application/json');
+        $res->getBody()->write(json_encode($result));
+        return $res;
+    }
 }

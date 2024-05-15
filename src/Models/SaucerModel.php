@@ -49,8 +49,12 @@ class SaucerModel
         return $this->response->SetResponse(false,'Error al traer los platillos');
     }
 
-    public function deleteSaucers($id) {
-        $data = $this ->db -> delete($this -> tbSaucers)->where($this -> saucersId, $id)->excecute();
+    public function deleteSaucer($body) {
+        $isExist = $this ->db -> from($this ->tbSaucers)->where($this ->saucersId, $body -> id)->fetch();
+        if(!$isExist){
+            return $this -> response ->SetResponse(false,"EL platillo no existe");
+        }
+        $data = $this ->db -> deleteFrom($this -> tbSaucers)->where($this -> saucersId, $body -> id)->execute();
         if ($data > 0) {
             return $this->response->SetResponse(true, 'Platillo eliminado correctamente.');
         } else {
@@ -65,6 +69,9 @@ class SaucerModel
             'price' => $body->price,
             'image' => $body->image
         ];
+        $isExist = $this ->db -> from($this ->tbSaucers)->where($this ->saucersId -> $body -> id)->first();
+        if($isExist)
+            return $this -> response ->SetResponse(false,"EL platillo no existe");
 
         $result = $this -> db -> update($this -> tbSaucers)->set($data)->where($this -> saucersId, $body->id)->execute();
         if($result){
