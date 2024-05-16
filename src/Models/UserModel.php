@@ -35,7 +35,7 @@ class UserModel
         }
         $existingUser = $this->db->from($this->tbUsers)->where($this->email, $userData->email)->count();
         if ($existingUser > 0) {
-            return $this->response->SetResponse(false, "El correo electrónico ya está registrado");
+            return $this->response->SetResponse(false, "El correo electrónico ya está registrado.");
         }   
         $data = [
             $this->name => $userData->name,
@@ -61,7 +61,7 @@ class UserModel
         if(!filter_var($body->email, FILTER_VALIDATE_EMAIL)){
             return $this->response->SetResponse(false, "Correo electrónico no válido.");
         }
-        $password = $body->password; // No necesitas hashear el password aquí
+        $password = $body->password;
         $user = $this->db->from($this->tbUsers)->where($this->email, $body->email)->fetch();
 
         if (!$user) {
@@ -70,7 +70,7 @@ class UserModel
 
         // Verificar la contraseña
         if (password_verify($password, $user['password'])) {
-            $this ->response ->result = $user['id'];
+            $this ->response ->result = $user;
             return $this->response->SetResponse(true, "Inicio de sesión correcto.");
         } else {
             return $this->response->SetResponse(false, "Contraseña incorrecta.");
@@ -78,6 +78,12 @@ class UserModel
     }
 
     public function updateUser ($body){
+        if(empty($body->name) || empty($body->lastname) || empty($body->tel) || empty($body->email) || empty($body->password)){
+            return $this->response->SetResponse(false, "Por favor, rellene todos los campos.");
+        }
+        if(!filter_var($body->email, FILTER_VALIDATE_EMAIL)){
+            return $this->response->SetResponse(false, "Correo electrónico no válido.");
+        }
         $data = [
             "name" => $body->name,
             "lastname" => $body -> lastname,
