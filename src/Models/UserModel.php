@@ -55,6 +55,12 @@ class UserModel
 
     public function authenticateUser($body)
     {
+        if(empty($body->email) || empty($body->password)){
+            return $this->response->SetResponse(false, "Por favor, rellene todos los campos.");
+        }  
+        if(!filter_var($body->email, FILTER_VALIDATE_EMAIL)){
+            return $this->response->SetResponse(false, "Correo electrónico no válido.");
+        }
         $password = $body->password; // No necesitas hashear el password aquí
         $user = $this->db->from($this->tbUsers)->where($this->email, $body->email)->fetch();
 
