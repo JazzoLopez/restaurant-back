@@ -52,7 +52,7 @@ class ReservationModel
 
     public function newReservations($body)
     {
-        $isUserExist = $this->db->from($this->tbReservaciones)->where($this->userID, $body->userID);
+        $isUserExist = $this->db->from($this->tbReservaciones)->where($this->userID, $body->user_id);
         if (!$isUserExist) {
             return $this->response->SetResponse(false, "El usuario no existe.");
         }
@@ -67,7 +67,7 @@ class ReservationModel
             'quantity' => $body->quantity,
             'comments' => $body->comments,
             'status' => $body->status,
-            'user_id' => $body->userID
+            'user_id' => $body->user_id
         ];
         $result = $this->db->insertInto($this->tbReservaciones)->values($data)->execute();
         if (!$result) {
