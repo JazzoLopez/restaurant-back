@@ -2,8 +2,8 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: *");
-header('Content-Type: application/json');
-
+header('Content-Type: application/json; charset=utf-8');
+header( "Access-Control-Allow-Credentials: true");
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
