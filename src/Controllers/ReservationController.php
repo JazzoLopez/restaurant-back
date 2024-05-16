@@ -30,7 +30,7 @@ class ReservationController
     {
         $body = json_decode($req->getBody());
         $res->withHeader('Content-type', 'application/json')        
-            ->getBody()->write(json_encode($this->reservacion->newReservations($body->userID)));
+            ->getBody()->write(json_encode($this->reservacion->newReservations($body)));
         return $res;
     }
 
