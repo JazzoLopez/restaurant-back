@@ -52,7 +52,7 @@ class ReservationModel
     public function newReservations($body)
     {
         $isUserExist =  $this -> db -> from($this->tbReservaciones)->where($this->userID, $body ->userID);
-        if($isUserExist){
+        if(!$isUserExist){
             return $this->response->SetResponse(false, "El usuario no existe.");
         }
         $validate = $this->db->from($this->tbReservaciones)
@@ -63,6 +63,7 @@ class ReservationModel
         $data = [
             'date' => $body->date,
             'hour' => $body->hour,
+            'quantity' => $body->quantity,
             'comments' => $body->comments,
             'status' => $body -> status,
             'user_id' => $body ->userID
