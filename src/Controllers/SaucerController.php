@@ -5,32 +5,38 @@ use App\Models\SaucerModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class SaucerController{
+class SaucerController
+{
     private $platillo = null;
 
-    public function __construct(){
-        $this -> platillo = new SaucerModel; 
+    public function __construct()
+    {
+        $this->platillo = new SaucerModel;
     }
-    public function newSaucer(Request $req, Response $res, $args){
+    public function newSaucer(Request $req, Response $res, $args)
+    {
         $body = json_decode($req->getBody());
         $res->withHeader('Content-type', 'application/json')
             ->getBody()->write(json_encode($this->platillo->newSaucer($body)));
         return $res;
     }
-    public function getSaucers(Request $req, Response $res, $args){
+    public function getSaucers(Request $req, Response $res, $args)
+    {
         $res->withHeader('Content-type', 'application/json')
             ->getBody()->write(json_encode($this->platillo->getSaucers()));
         return $res;
     }
-    
-    public function deleteSaucer(Request $req, Response $res, $args){
+
+    public function deleteSaucer(Request $req, Response $res, $args)
+    {
         $body = json_decode($req->getBody());
         $res->withHeader('Content-type', 'application/json')
             ->getBody()->write(json_encode($this->platillo->deleteSaucer($body)));
         return $res;
     }
 
-    public function updateSaucer(Request $req, Response $res, $args){
+    public function updateSaucer(Request $req, Response $res, $args)
+    {
         $body = json_decode($req->getBody());
         $res->withHeader('Content-type', 'application/json')
             ->getBody()->write(json_encode($this->platillo->updateSaucer($body)));

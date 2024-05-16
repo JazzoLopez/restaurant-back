@@ -20,16 +20,16 @@ class ReservationController
     public function getReservations(Request $req, Response $res, $args)
     {
 
-        $body = json_decode($req->getBody());  
+        $body = json_decode($req->getBody());
         $res->withHeader('Content-type', 'application/json')
-            ->getBody()->write(json_encode($this->reservacion->getReservations($body->userID)));
+            ->getBody()->write(json_encode($this->reservacion->getReservations($body)));
         return $res;
     }
 
     public function newReservations(Request $req, Response $res, $args)
     {
         $body = json_decode($req->getBody());
-        $res->withHeader('Content-type', 'application/json')        
+        $res->withHeader('Content-type', 'application/json')
             ->getBody()->write(json_encode($this->reservacion->newReservations($body)));
         return $res;
     }
@@ -37,9 +37,9 @@ class ReservationController
     public function deleteReservations(Request $req, Response $res, $args)
     {
         $body = json_decode($req->getBody());
-        
-        $res->withHeader('Content-type', 'application/json')        
-            ->getBody()->write(json_encode($this->reservacion->deleteReservations($body->userID)));
+
+        $res->withHeader('Content-type', 'application/json')
+            ->getBody()->write(json_encode($this->reservacion->deleteReservations($body)));
         return $res;
     }
 }
