@@ -15,8 +15,8 @@ class UserModel
     private $lastName = 'lastname';
     private $email = 'email';
     private $password = 'password';
-    private $tel = 'tel';
-
+    private $tel = 'tel';   
+    
     public function __construct()
     {
         $db = new DbModel();
@@ -26,11 +26,17 @@ class UserModel
 
     public function createUser($userData)
     {
-        // Verificar si el correo electrónico ya está registrado
+        
+        if(empty($userData->name) || empty($userData->lastname) || empty($userData->tel) || empty($userData->email) || empty($userData->password)){
+            return $this->response->SetResponse(false, "Por favor, rellene todos los campos.");
+        }
+        if(!filter_var($userData->email, FILTER_VALIDATE_EMAIL)){
+            return $this->response->SetResponse(false, "Correo electrónico no válido.");
+        }
         $existingUser = $this->db->from($this->tbUsers)->where($this->email, $userData->email)->count();
         if ($existingUser > 0) {
             return $this->response->SetResponse(false, "El correo electrónico ya está registrado");
-        }
+        }   
         $data = [
             $this->name => $userData->name,
             $this->lastName => $userData->lastname,
@@ -58,44 +64,42 @@ class UserModel
 
         // Verificar la contraseña
         if (password_verify($password, $user['password'])) {
-            $this->response->result = $user['id'];
+            $this ->response ->result = $user['id'];
             return $this->response->SetResponse(true, "Inicio de sesión correcto.");
         } else {
             return $this->response->SetResponse(false, "Contraseña incorrecta.");
         }
     }
 
-    public function updateUser($body)
-    {
+    public function updateUser ($body){
         $data = [
             "name" => $body->name,
-            "lastname" => $body->lastname,
-            "tel" => $body->tel,
-            "email" => $body->email,
+            "lastname" => $body -> lastname,
+            "tel" => $body -> tel,
+            "email" => $body -> email,
             $this->password => password_hash($body->password, PASSWORD_DEFAULT)
         ];
-        $isExist = $this->db->from($this->tbUsers)->where($this->email, $body->email)->fetch();
+        $isExist = $this -> db -> from($this -> tbUsers)->where($this -> email, $body -> email)->fetch();
 
-        if ($isExist) {
+        if($isExist){
             return $this->response->SetResponse(false, 'El correo electrónico ya está registrado.');
         }
 
-        $result = $this->db->update($this->tbUsers)->set($data)->where($this->userID, $body->id)->execute();
-        if ($result) {
-            $this->response->result = $result;
+        $result = $this -> db -> update($this -> tbUsers)->set($data)->where($this -> userID, $body->id)->execute();
+        if($result){
+            $this -> response -> result = $result;
             return $this->response->SetResponse(true, 'Usuario actualizado.');
         } else {
-            return $this->response->SetResponse(false, 'Error al actualizar.');
+            return $this->response->SetResponse(false,'Error al actualizar.');
         }
-    }
+    }   
 
-    public function deleteUser($body)
-    {
-        $isExist = $this->db->from($this->tbUsers)->where($this->userID, $body->id)->fetch();
-        if (!$isExist) {
-            return $this->response->SetResponse(false, "EL usuario no existe");
+    public function deleteUser($body) {
+        $isExist = $this ->db -> from($this ->tbUsers)->where($this ->userID, $body -> id)->fetch();
+        if(!$isExist){
+            return $this -> response ->SetResponse(false,"EL usuario no existe");
         }
-        $data = $this->db->deleteFrom($this->tbUsers)->where($this->userID, $body->id)->execute();
+        $data = $this ->db -> deleteFrom($this -> tbUsers)->where($this -> userID, $body -> id)->execute();
         if ($data) {
             return $this->response->SetResponse(true, 'Usuario eliminado correctamente.');
         } else {
@@ -103,19 +107,17 @@ class UserModel
         }
     }
 
-    public function getUsers()
-    {
-        $data = $this->db->from($this->tbUsers)->select($this->name)->fetchAll();
-        if ($data) {
-            $this->response->result = $data;
+    public function getUsers (){
+        $data = $this -> db -> from($this -> tbUsers)->select($this->name)->fetchAll();
+        if($data){
+            $this -> response -> result = $data;
             return $this->response->SetResponse(true, 'Usuarios encontrados.');
         } else {
             return $this->response->SetResponse(false, 'No se encontraron usuarios.');
         }
     }
 
-    public function getOne($body)
-    {
-
+    public function getOne($body) {
+        
     }
 }
