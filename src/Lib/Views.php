@@ -17,7 +17,7 @@ class Views
                 <title>Cuenta Verificada</title>
                 <style>
                     body {
-                        font-family: Arial, sans-serif;
+                        font-family: system-ui;
                         text-align: center;
                         margin: 0;
                         padding: 0;
@@ -63,7 +63,7 @@ class Views
 <title>Verificacion de cuenta</title>
                 <style>
                     body {
-                        font-family: Arial, sans-serif;
+                        font-family: system-ui;
                         text-align: center;
                         margin: 0;
                         padding: 0;
