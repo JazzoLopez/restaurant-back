@@ -24,6 +24,9 @@ class SaucerModel
 
     public function newSaucer($body)
     {
+        if(empty($body->name) || empty($body->description) || empty($body->price) || empty($body->image))
+            return $this->response->SetResponse(false, 'Campos requeridos');
+
         $data = [
             'name' => $body->name,
             'description' => $body->description,
@@ -40,7 +43,7 @@ class SaucerModel
     }
 
     public function getSaucers()
-    {
+    {   
         $data = $this->db->from($this->tbSaucers)->fetchAll();
         if (count($data) > 0) {
             $this->response->result = $data;
@@ -66,6 +69,8 @@ class SaucerModel
 
     public function updateSaucer($body)
     {
+        if(empty($body->name) || empty($body->description) || empty($body->price) || empty($body->image))
+            return $this->response->SetResponse(false, 'Campos requeridos');
         $data = [
             'name' => $body->name,
             'description' => $body->description,

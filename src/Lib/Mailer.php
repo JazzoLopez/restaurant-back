@@ -99,7 +99,7 @@ class Mailer
             <div class='content'>
                 <p>Hola, {$userData->name}</p>
                 <p>Gracias por registrarte. Por favor, haz clic en el botón de abajo para activar tu cuenta:</p>
-                <a href='http://localhost:3000/verificar-cuenta/{$token}' class='button'>Activar cuenta</a>
+                <a href='https://site--restaurant--kzdpwwvkt5l6.code.run/verificar-cuenta/{$token}' class='button'>Activar cuenta</a>
                 <p>Gracias por tu atención.</p>
             </div>
             <div class='footer'>

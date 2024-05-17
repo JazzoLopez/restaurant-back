@@ -24,7 +24,9 @@ class ReservationModel
     }
 
     public function getReservations($body)
-    {
+    {if(empty($body->userID)){
+        return $this->response->setResponse(false, 'El id del usuario es requerido.');
+    }
 
         $resutl = $this->db->from($this->tbReservaciones)->where($this->userID, $body->userID)->fetchAll();
         if (count($resutl) > 0) {
@@ -38,6 +40,9 @@ class ReservationModel
 
     public function deleteReservations($body)
     {
+        if(empty($body->userID)){
+            return $this->response->SetResponse(false, 'El id del usuario es requerido.');
+        }
         $isExist = $this->db->from($this->tbReservaciones)->where($this->id, $body->id);
         if ($isExist->count() == 0) {
             return $this->response->SetResponse(false, 'La reservación no existe');
@@ -52,6 +57,8 @@ class ReservationModel
 
     public function newReservations($body)
     {
+        if(empty($body->date) || empty($body->hour) || empty($body->quantity) || empty($body->comments) || empty($body->status) || empty($body->user_id))
+            return $this->response->SetResponse(false, 'Campos requeridos');
         $isUserExist = $this->db->from($this->tbReservaciones)->where($this->userID, $body->user_id);
         if (!$isUserExist) {
             return $this->response->SetResponse(false, "El usuario no existe.");
