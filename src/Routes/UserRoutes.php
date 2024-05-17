@@ -7,3 +7,4 @@ $app->post('/login', UserController::class . ':authenticateUser');
 $app->options('/login', UserController::class . ':authenticateUser');
 $app->put('/actualizar-usuario', UserController::class . ':updateUser');
 $app->delete('/eliminar-usuario', UserController::class . ':deleteUser');
+$app->get('/verificar-cuenta/{token}', UserController::class . ':verifyAccount');

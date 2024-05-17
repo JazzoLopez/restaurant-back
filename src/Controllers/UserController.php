@@ -5,14 +5,17 @@ namespace App\Controllers;
 use App\Models\UserModel;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use App\Lib\Views;
 
 class UserController
 {
     private $UserModel;
+    private $Views;
 
     public function __construct()
     {
         $this->UserModel = new UserModel;
+        $this->Views = new Views;
     }
 
     public function createUser(Request $req, Response $res, $args)
@@ -61,4 +64,19 @@ class UserController
         $res->getBody()->write(json_encode($result));
         return $res;
     }
+
+    public function verifyAccount(Request $req, Response $res, $args)
+    {
+        $token = $args['token'];
+        $result = $this->UserModel->verifyAccount($token);
+        if ($result->response) {
+            // Renderizar la plantilla de cuenta verificada
+            $res->getBody()->write($this->Views->accountValidHtml($result));
+            return $res->withHeader('Content-Type', 'text/html');
+        } else {
+            $res->getBody()->write($this->Views->accountInvalidHTML($result));
+            return $res->withHeader('Content-Type', 'text/html');
+        }
+    }
+
 }
