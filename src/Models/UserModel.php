@@ -51,7 +51,7 @@ class UserModel
             $this->lastName => $userData->lastname,
             $this->tel => $userData->tel,
             $this->email => $userData->email,
-            $this->password => password_hash($userData->password, PASSWORD_DEFAULT), // Se hashea la contraseña antes de guardarla en la base de datos
+            $this->password => password_hash($userData->password, PASSWORD_DEFAULT),
             $this ->userToken => $token
 
         ];
