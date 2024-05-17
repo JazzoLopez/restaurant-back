@@ -45,6 +45,7 @@ class Views
                         <h1>Cuenta Verificada</h1>
                         <p>{$result->message}</p>
                     </div>
+                    <p>Por favor cierra esta ventana y vuelve a la aplicación.</p>
                 </div>
             </body>
         </html>
