@@ -20,8 +20,8 @@ class Mailer
         $this->mail->isSMTP();
         $this->mail->Host = 'smtp.gmail.com';
         $this->mail->SMTPAuth = true;
-        $this->mail->Username = 'jazzielrodriguezlopez@gmail.com';
-        $this->mail->Password = 'sdfzmrunowekcxlb';
+        $this->mail->Username = $_ENV['EMAIL'];;
+        $this->mail->Password = $_ENV['EMAIL_PASSWORD'];;
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $this->mail->Port = 587;
     }
@@ -29,7 +29,7 @@ class Mailer
     public function sendMail($to, $subject, $userData, $token = null, $altBody = '')
     {
         try {
-            $this->mail->setFrom('jazzielrodriguezlopez@gmail.com', 'Reservaciones Express');
+            $this->mail->setFrom($_ENV['EMAIL'], 'Reservaciones Express');
             $this->mail->addAddress($to);
 
             $body = "
